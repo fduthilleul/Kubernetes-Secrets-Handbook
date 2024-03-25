@@ -1,7 +1,7 @@
 # Chapter 1 - Example 2
 
 ## Overview and outcomes
-This example provide a walthrough to create a secret within Kubernetes and observe it's payload from an etcd key store perspective. 
+This example provides a walthrough to create a secret within Kubernetes and observe its payload from an etcd key store perspective. 
 
 ### Get your environment ready
 First clone the git repository:  
@@ -70,7 +70,7 @@ kubectl create -f k8s-secret.yaml
 secret/mysecret created
 ```
 
-Let's inspect the newly create object:
+Let's inspect the newly created object:
 ```
 kubectl get secret/mysecret
 ```
@@ -159,7 +159,7 @@ data:
   appversion: “dev" 
 ```
 
-The main difference with our ```Secret``` object. The ```ConfigMap``` data field expects UTF-8 strings while a ```Secret``` object expect base64 encoded strings.
+The main difference with our ```Secret``` object. The ```ConfigMap``` data field expects UTF-8 strings while a ```Secret``` object expects base64 encoded strings.
 Note that there is a ```binaryData``` field for the ```ConfigMap``` object allowing you to present a file that will be mounted within the container. 
 
 Run the create command:
@@ -170,7 +170,7 @@ kubectl create -f ch01/example02/k8s-configmap.yaml
 configmap/app-environment created
 ```
 
-Let's inspect the newly create object:
+Let's inspect the newly created object:
 ```
 kubectl get configmap/app-environment
 ```
@@ -292,7 +292,7 @@ kubectl create -f k8s-busybox.yaml
 ```
 pod/busybox created
 ```
-Make sure that you have created the ```ConfigMap``` object in the previous seciont or the ```Pod``` creation will fail. 
+Make sure that you have created the ```ConfigMap``` object in the previous section or the ```Pod``` creation will fail. 
 
 Check the container logs:
 ```
@@ -324,9 +324,9 @@ kubectl -n kube-system exec etcd-kind-cluster-control-plane -- sh -c "ETCDCTL_EN
 Maybe have a bit of explanation first:
 
 * we are executing within the ```etcd``` pod called ```etcd-kind-cluster-control-plane``` being deployed in the namespace ```kube-system``` the command ```"ETCDCTL_ENDPOINTS='https://127.0.0.1:2379' ETCDCTL_CACERT='/etc/kubernetes/pki/etcd/ca.crt' ETCDCTL_CERT='/etc/kubernetes/pki/etcd/server.crt' ETCDCTL_KEY='/etc/kubernetes/pki/etcd/server.key' ETCDCTL_API=3 etcdctl get /registry/secrets/default/mysecret"``` 
-* that command is defining where are the TLS certificate to access the ```etcd``` API server and get the payload for ```/registry/secrets/default/mysecret``` or our Secret object created in the namespace called ```default```
+* that command is defining where are the TLS certificates to access the ```etcd``` API server and get the payload for ```/registry/secrets/default/mysecret``` or our Secret object created in the namespace called ```default```
 
-This will results in the following output:
+This will result in the following output:
 ```
 /registry/secrets/default/mysecret
 k8s
@@ -344,7 +344,7 @@ usernameadmin
 Opaque"
 ```
 
-Let's query the second Secert object we have created together by changing the request with ```/registry/secrets/default/secret-example02```:
+Let's query the second Secret object we have created together by changing the request with ```/registry/secrets/default/secret-example02```:
 ```
 kubectl -n kube-system exec etcd-kind-cluster-control-plane -- sh -c "ETCDCTL_ENDPOINTS='https://127.0.0.1:2379' ETCDCTL_CACERT='/etc/kubernetes/pki/etcd/ca.crt' ETCDCTL_CERT='/etc/kubernetes/pki/etcd/server.crt' ETCDCTL_KEY='/etc/kubernetes/pki/etcd/server.key' ETCDCTL_API=3 etcdctl get /registry/secrets/default/secret-example02" 
 ```
@@ -522,5 +522,5 @@ This should open the file in read mode, we can search the offset by typing ```/0
 ```
 
 ## Conclusion
-As you can see, the data is in clear text and accessible via both the standard API services from Kubernetes and ```etcd```, and a filesystem acces.
+As you can see, the data is in clear text and accessible via both the standard API services from Kubernetes and ```etcd```, and a filesystem access.
  
